@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Ye line responsive ke liye zaroori hai, iske bina mobile par page chhota dikhega -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Tailwind CLI se bani CSS file yahan link hoti hai -->
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+
+  <!--
+    body:
+    bg-gray-900      -> dark background
+    flex             -> andar ke element ko flex layout mein rakho
+    justify-center   -> card ko horizontally beech mein lao
+    items-center     -> card ko vertically beech mein lao
+    min-h-screen     -> body ki height kam se kam poori screen jitni
+    p-4              -> mobile par card screen ke kinaaron se na chipke
+  -->
+  <body class="bg-gray-900 flex justify-center items-center min-h-screen p-4">
+
+    <!--
+      Login card:
+      bg-gray-700      -> card ka background
+      rounded-lg       -> gol kone
+      shadow-2xl       -> bada shadow
+      w-full           -> available width poori le
+      max-w-sm         -> mobile par card 384px se zyada chauda nahi
+      md:max-w-md      -> 768px ke baad max width 448px
+      lg:max-w-lg      -> 1024px ke baad max width 512px
+      p-6              -> mobile par kam padding
+      sm:p-8           -> 640px ke baad padding badhao
+      lg:p-10          -> 1024px ke baad aur badhao
+    -->
+    <div
+      class="bg-gray-700 rounded-lg p-6 sm:p-8 lg:p-10 shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg"
+    >
+
+      <!--
+        Heading:
+        text-center  -> text beech mein
+        mb-6         -> neeche gap
+        text-2xl     -> mobile par chhota size
+        sm:text-3xl  -> 640px ke baad bada
+        lg:text-4xl  -> 1024px ke baad aur bada
+      -->
+      <h2
+        class="text-center text-2xl sm:text-3xl lg:text-4xl text-white mb-6 font-bold"
+      >
+        Login
+      </h2>
+
+      <form>
+
+        <!-- Email wala group. mb-4 -> is group ke neeche gap -->
+        <div class="mb-4">
+
+          <!--
+            Label:
+            block       -> label alag line mein aaye (input ke upar)
+            text-sm     -> mobile par chhota text
+            sm:text-base-> 640px ke baad normal size
+            for="email" -> neeche wale input ki id se match karta hai,
+                           isse label par click karne se input focus hota hai
+          -->
+          <label
+            class="block text-sm sm:text-base font-medium text-gray-300 mb-2"
+            for="email"
+            >Email</label
+          >
+
+          <!--
+            Input:
+            w-full          -> poori width
+            px-3            -> left-right padding
+            py-2 sm:py-3    -> upar-neeche padding, bade screen par zyada
+            text-sm sm:text-base -> text size responsive
+            bg-gray-600     -> input ka background
+            border border-gray-500 -> border dikhane ke liye "border" (width) aur
+                                      "border-gray-500" (colour) dono chahiye
+            rounded-md      -> halke gol kone
+            text-white      -> typed text safed
+            focus:outline-none   -> click karne par browser ki default outline hatao
+            focus:ring-2         -> uski jagah 2px ring dikhao
+            focus:ring-blue-500  -> ring ka colour blue
+            (dhyan: "focus:" ke baad space nahi hota)
+          -->
+          <input
+            class="w-full px-3 py-2 sm:py-3 text-sm sm:text-base bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="email"
+            name="email"
+            placeholder="Email"
+            id="email"
+          />
+        </div>
+
+        <!-- Password wala group, classes email wale jaisi hi hain -->
+        <div class="mb-4">
+          <label
+            class="block text-sm sm:text-base font-medium text-gray-300 mb-2"
+            for="password"
+            >Password</label
+          >
+          <!-- type="password" se typed text dots mein dikhta hai -->
+          <input
+            class="w-full px-3 py-2 sm:py-3 text-sm sm:text-base bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="password"
+            name="password"
+            placeholder="Password"
+            id="password"
+          />
+        </div>
+
+        <!--
+          Button:
+          w-full            -> poori width
+          bg-blue-600       -> normal blue
+          hover:bg-blue-700 -> mouse le jane par thoda gehra blue
+          transition        -> colour smoothly badle, jhatke se nahi
+          cursor-pointer    -> mouse le jane par haath wala icon
+                               (Tailwind v4 mein button par ye default nahi hota)
+          py-2 sm:py-3, text-sm sm:text-base -> size responsive
+        -->
+        <button
+          class="w-full bg-blue-600 text-white py-2 sm:py-3 text-sm sm:text-base rounded-md hover:bg-blue-700 transition cursor-pointer"
+          type="submit"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

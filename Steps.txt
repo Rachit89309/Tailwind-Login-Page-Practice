@@ -1,0 +1,200 @@
+=====================================================================
+TAILWIND TUTORIAL - STEPS (Installation se leke use tak)
+=====================================================================
+ 
+Folder structure:
+Tailwind Tutorial/
+  |-- my-project/      -> Vite + React + Tailwind v4 (Method A)
+  |-- node-project/    -> Plain HTML + Tailwind v4 CLI (Method B)
+ 
+Tailwind latest version: v4.x (v4 mein "npx tailwindcss init" nahi hota,
+tailwind.config.js by default zaroori nahi hai, config CSS mein @theme se hoti hai)
+ 
+ 
+=====================================================================
+METHOD A: VITE + REACT PROJECT (my-project)
+Kab use karen: React project banana ho, hot reload (HMR) chahiye
+=====================================================================
+ 
+STEP 1: Project banayen
+  Command : npm create vite@latest my-project
+  Kab     : Sirf ek baar, project shuru karte waqt
+  Note    : Ye khud package.json bana deta hai, isliye npm init -y ki
+            zaroorat nahi hoti
+  Prompt  : Linter ke liye Oxlint ya ESLint chun sakte hain
+            (beginner ke liye Oxlint theek hai)
+ 
+STEP 2: Project folder ke ANDAR jayen
+  Command : cd my-project
+  Kab     : Har npm command se pehle path check karen
+  Galti   : Parent folder (Tailwind Tutorial) mein npm install chalane se
+            bahar extra node_modules, package.json, package-lock.json
+            ban jati hain. Aisa ho jaye to bahar wali teen cheezein
+            delete karen (my-project ke andar wali nahi)
+ 
+STEP 3: Tailwind install karen
+  Command : npm install tailwindcss @tailwindcss/vite
+  Kab     : Sirf ek baar, my-project ke andar
+ 
+STEP 4: vite.config.js mein plugin add karen
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
+  import tailwindcss from '@tailwindcss/vite'
+ 
+  export default defineConfig({
+    plugins: [
+      react(),
+      tailwindcss(),
+    ],
+  })
+  Kab     : Install ke turant baad, sirf ek baar
+ 
+STEP 5: src/index.css ko saaf karke sirf ye likhen
+  @import "tailwindcss";
+ 
+  Custom breakpoint chahiye to (optional):
+  @theme {
+    --breakpoint-3xl: 120rem;
+  }
+  Kab     : Setup ke time. Vite ki purani starter CSS (:root, #root, h1,
+            p, code wali styling) hata den, warna wo Tailwind classes ko
+            override kar deti hai
+ 
+STEP 6: App.jsx se App.css ka import hata den (ya App.css khali karen)
+  Hataen  : import "./App.css";
+  Kab     : Practice ke liye saaf slate chahiye tab
+ 
+STEP 7: Dev server chalayen
+  Command : npm run dev
+  Kab     : Har baar kaam shuru karte waqt
+  Open    : http://localhost:5173
+ 
+STEP 8: Test karen (App.jsx mein)
+  <h1 className="text-4xl font-bold text-blue-600 3xl:text-6xl">
+    Hello Tailwind
+  </h1>
+  Text bada, bold, blue dikhe to setup sahi hai
+  Note: React mein "class" ki jagah "className" likhte hain
+ 
+ 
+=====================================================================
+METHOD B: PLAIN HTML + TAILWIND v4 CLI (node-project)
+Kab use karen: Bina React/Vite ke, sirf HTML mein Tailwind seekhna ho
+=====================================================================
+ 
+STEP 1: Folder banayen aur andar jayen
+  Commands: mkdir node-project
+            cd node-project
+ 
+STEP 2: package.json banayen
+  Command : npm init -y
+  Kab     : Sirf khaali folder mein, ek baar
+  Note    : Vite project mein ye zaroori nahi hota
+ 
+STEP 3: Tailwind CLI install karen
+  Command : npm install tailwindcss @tailwindcss/cli
+  Kab     : Sirf ek baar
+  Warning : "@parcel/watcher install-scripts" warning ignore kar sakte
+            hain. Watch mode mein error aaye tabhi ye chalayen:
+            npm install-scripts approve @parcel/watcher
+ 
+STEP 4: src/input.css banayen
+  @import "tailwindcss";
+  Kab     : Ek baar. Ye v3 ki teen lines (@tailwind base; components;
+            utilities;) ki jagah leti hai
+ 
+STEP 5: index.html banayen (project root mein)
+  <link href="./src/output.css" rel="stylesheet" />
+  Kab     : Ek baar. HTML output.css ko link karta hai, input.css ko nahi
+ 
+STEP 6: CSS build/watch chalayen
+  Command : npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
+  Kab     : Har baar kaam shuru karte waqt. Terminal chalta rehne den,
+            HTML mein nayi class likhte hi output.css update hoti hai
+ 
+STEP 7: package.json mein shortcut script (optional)
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch"
+  }
+  Phir bas: npm run dev
+ 
+STEP 8: index.html browser mein kholen
+  Kab     : Live Server extension se ya double-click karke
+ 
+ 
+=====================================================================
+OPTIONAL: tailwind.config.js (course v3 style ke saath chalne ke liye)
+Kab use karen: Instructor config file use karwa raha ho
+=====================================================================
+ 
+STEP 1: Root mein tailwind.config.js banayen
+  /** @type {import('tailwindcss').Config} */
+  module.exports = {
+    content: ["./index.html", "./src/**/*.{html,js}"],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  }
+ 
+STEP 2: input.css mein config ko explicitly load karen
+  @import "tailwindcss";
+  @config "../tailwind.config.js";
+  Kab     : v4 config file khud nahi padhta, isliye ye line zaroori hai
+ 
+NOTE: module.exports sirf "type": "commonjs" ke saath chalta hai.
+      package.json mein "type" key ek hi baar likhen (duplicate nahi)
+ 
+ 
+=====================================================================
+AGAR COURSE v3 PAR HAI (bilkul same steps follow karne ke liye)
+=====================================================================
+  npm uninstall @tailwindcss/cli
+  npm install -D tailwindcss@3
+  npx tailwindcss init
+  input.css mein: @tailwind base; @tailwind components; @tailwind utilities;
+  Build: npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+  v3 aur v4 ko ek hi folder mein mix mat karen
+ 
+ 
+=====================================================================
+V3 VS V4 FARAK (yaad rakhne ke liye)
+=====================================================================
+  | Cheez            | v3                        | v4                       |
+  | CSS entry        | @tailwind base/...        | @import "tailwindcss";   |
+  | Config           | tailwind.config.js        | @theme (CSS mein)        |
+  | init command     | npx tailwindcss init      | nahi hota                |
+  | content paths    | config mein likhne padte  | automatic detect         |
+  | CLI              | tailwindcss package       | @tailwindcss/cli package |
+ 
+ 
+=====================================================================
+COMMON ERRORS AUR FIX
+=====================================================================
+1. "npm error could not determine executable to run"
+   Wajah : v4 mein "npx tailwindcss init" nahi hota
+   Fix   : v3 install karen ya v4 ka CLI use karen
+ 
+2. Extra node_modules/package.json parent folder mein
+   Wajah : npm install galat folder mein chal gaya
+   Fix   : Parent ki extra files delete karen, cd my-project karke dobara
+ 
+3. "Unknown at rule @theme" (VS Code warning)
+   Wajah : VS Code ka CSS checker Tailwind v4 rules nahi jaanta
+   Fix   : "Tailwind CSS IntelliSense" extension install karen, ya
+           settings.json mein "css.lint.unknownAtRules": "ignore"
+ 
+4. Tailwind classes kaam nahi kar rahi (Vite project)
+   Wajah : Starter CSS (h1, p, #root wali) classes ko override kar rahi
+   Fix   : index.css saaf karen, App.css ka import hata den
+ 
+5. package.json mein "type" do baar
+   Fix   : Ek hi rakhen ("commonjs" agar module.exports use ho raha ho)
+ 
+ 
+=====================================================================
+ROZ KAAM SHURU KARNE KA FLOW
+=====================================================================
+  Vite project  : cd my-project  ->  npm run dev
+  CLI project   : cd node-project ->  npm run dev  ->  index.html kholen
+=====================================================================
